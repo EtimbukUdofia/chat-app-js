@@ -3,19 +3,18 @@ import { config } from "dotenv";
 import authRoutes from "./routes/auth.routes.js";
 import connectDB from "./db/connectDB.js";
 import mongoose from "mongoose";
-const app = express();
+
 config();
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
 
 connectDB();
 
-const PORT = process.env.PORT || 5000;
-
-app.get("/", (req, res) => {
-  res.send("hello");
-});
+app.use(express.json());
 
 app.use("/api/auth", authRoutes);
-
 
 mongoose.connection.once("open", () => {
   console.log("Connected to mongoDB");
